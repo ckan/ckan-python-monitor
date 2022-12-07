@@ -1,0 +1,13 @@
+name: CKAN 2.10 on Python 3.9
+
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * 2,4'
+
+jobs:
+  call-reusable-workflow:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      python-version: "3.9"
+      ckan-version: "dev-v2.10"

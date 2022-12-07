@@ -1,0 +1,13 @@
+name: CKAN master on Python 3.7
+
+on:
+  push:
+  schedule:
+    - cron: '0 0 * * 2,4'
+
+jobs:
+  call-reusable-workflow:
+    uses: ./.github/workflows/reusable.yml
+    with:
+      python-version: "3.7"
+      ckan-version: "master"

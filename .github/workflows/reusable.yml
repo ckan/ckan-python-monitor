@@ -1,0 +1,67 @@
+name: Reusable CKAN Test workflow
+
+on:
+  workflow_call:
+    inputs:
+      python-version:
+        required: true
+        type: string
+      ckan-version:
+        required: true
+        type: string
+
+jobs:
+  build:
+    runs-on: ubuntu-20.04
+    services:
+      solr:
+        image: ckan/ckan-solr:master
+        ports:
+          - 8983:8983
+      postgres:
+        image: ckan/ckan-postgres-dev:master
+        env:
+          POSTGRES_USER: postgres
+          POSTGRES_PASSWORD: postgres
+          POSTGRES_DB: postgres
+        options: --health-cmd pg_isready --health-interval 10s --health-timeout 5s --health-retries 5
+        ports:
+          - 5432:5432
+      redis:
+        image: redis:3
+        ports:
+          - 6379:6379
+    env:
+      # Given that CKAN is executed in the runner, we need to map service's port and set URL to localhost.
+      CKAN_SQLALCHEMY_URL: postgresql://ckan_default:pass@localhost/ckan_test
+      CKAN_DATASTORE_WRITE_URL: postgresql://datastore_write:pass@localhost/datastore_test
+      CKAN_DATASTORE_READ_URL: postgresql://datastore_read:pass@localhost/datastore_test
+      CKAN_SOLR_URL: http://localhost:8983/solr/ckan
+      CKAN_REDIS_URL: redis://localhost:6379/1
+    steps:
+      - uses: actions/checkout@v3
+      - name: Set up Python ${{ inputs.python-version }}
+        uses: actions/setup-python@v4
+        with:
+          python-version: ${{ inputs.python-version }}
+      - name: Display Python version
+        run: python -c "import sys; print(sys.version)"
+      - name: Clone CKAN repositry
+        run: git clone https://github.com/ckan/ckan.git
+      - name: Checkout CKAN ${{ inputs.ckan-version }}
+        run: |
+          cd ckan
+          git checkout ${{ inputs.ckan-version }}
+      - name: Install requirements
+        run: |
+          cd ckan
+          pip install -r requirement-setuptools.txt
+          pip install -r requirements.txt
+          pip install -r dev-requirements.txt
+          python setup.py develop
+          pip check
+      - name: Execute tests
+        run: |
+          cd ckan
+          ckan -c test-core.ini db init
+          pytest --ckan-ini=test-core.ini ckan/tests ckanext
