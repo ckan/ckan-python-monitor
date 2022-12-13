@@ -68,7 +68,7 @@ jobs:
           ckan config-tool test-core.ini ckan.datastore.write_url=${DATASTORE_WRITE_URL}
           ckan config-tool test-core.ini ckan.datastore.read_url=${DATASTORE_READ_URL}
           ckan config-tool test-core.ini solr_url=${SOLR_URL}
-          ckan config-tool test-core.ini ckan.redis_url=${REDIS_URL}
+          ckan config-tool test-core.ini ckan.redis.url=${REDIS_URL}
       - name: Execute tests
         run: |
           cd ckan
