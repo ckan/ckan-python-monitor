@@ -63,6 +63,7 @@ jobs:
           pip check
       - name: Set config file
         run: |
+          cd ckan
           ckan config-tool test-core.ini sqlalchemy.url=${SQLALCHEMY_URL}
           ckan config-tool test-core.ini ckan.datastore.write_url=${DATASTORE_WRITE_URL}
           ckan config-tool test-core.ini ckan.datastore.read_url=${DATASTORE_READ_URL}
