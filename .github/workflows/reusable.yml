@@ -33,11 +33,12 @@ jobs:
           - 6379:6379
     env:
       # Given that CKAN is executed in the runner, we need to map service's port and set URL to localhost.
-      CKAN_SQLALCHEMY_URL: postgresql://ckan_default:pass@localhost/ckan_test
-      CKAN_DATASTORE_WRITE_URL: postgresql://datastore_write:pass@localhost/datastore_test
-      CKAN_DATASTORE_READ_URL: postgresql://datastore_read:pass@localhost/datastore_test
-      CKAN_SOLR_URL: http://localhost:8983/solr/ckan
-      CKAN_REDIS_URL: redis://localhost:6379/1
+      # We are avoiding the CKAN_ patterns since test should be run in strict mode
+      SQLALCHEMY_URL: postgresql://ckan_default:pass@localhost/ckan_test
+      DATASTORE_WRITE_URL: postgresql://datastore_write:pass@localhost/datastore_test
+      DATASTORE_READ_URL: postgresql://datastore_read:pass@localhost/datastore_test
+      SOLR_URL: http://localhost:8983/solr/ckan
+      REDIS_URL: redis://localhost:6379/1
     steps:
       - uses: actions/checkout@v3
       - name: Set up Python ${{ inputs.python-version }}
@@ -60,6 +61,13 @@ jobs:
           pip install -r dev-requirements.txt
           python setup.py develop
           pip check
+      - name: Set config file
+        run: |
+          sed -i -e 's/sqlalchemy.url =.*/sqlalchemy.url = ${SQLALCHEMY_URL}' test-core.ini
+          sed -i -e 's/ckan.datastore.write_url =.*/ckan.datastore.write_url = ${DATASTORE_WRITE_URL}' test-core.ini
+          sed -i -e 's/ckan.datastore.read_url =.*/ckan.datastore.read_url = ${DATASTORE_READ_URL}' test-core.ini
+          sed -i -e 's/solr_url =.*/solr_url = ${SOLR_URL}' test-core.ini
+          sed -i -e 's/ckan.redis_url =.*/ckan.redis_url = ${REDIS_URL}' test-core.ini
       - name: Execute tests
         run: |
           cd ckan
