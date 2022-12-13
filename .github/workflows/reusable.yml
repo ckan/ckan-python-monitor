@@ -63,11 +63,11 @@ jobs:
           pip check
       - name: Set config file
         run: |
-          sed -i -e 's/sqlalchemy.url =.*/sqlalchemy.url = ${SQLALCHEMY_URL}' test-core.ini
-          sed -i -e 's/ckan.datastore.write_url =.*/ckan.datastore.write_url = ${DATASTORE_WRITE_URL}' test-core.ini
-          sed -i -e 's/ckan.datastore.read_url =.*/ckan.datastore.read_url = ${DATASTORE_READ_URL}' test-core.ini
-          sed -i -e 's/solr_url =.*/solr_url = ${SOLR_URL}' test-core.ini
-          sed -i -e 's/ckan.redis_url =.*/ckan.redis_url = ${REDIS_URL}' test-core.ini
+          ckan config-tool test-core.ini sqlalchemy.url=${SQLALCHEMY_URL}
+          ckan config-tool test-core.ini ckan.datastore.write_url=${DATASTORE_WRITE_URL}
+          ckan config-tool test-core.ini ckan.datastore.read_url=${DATASTORE_READ_URL}
+          ckan config-tool test-core.ini solr_url=${SOLR_URL}
+          ckan config-tool test-core.ini ckan.redis_url=${REDIS_URL}
       - name: Execute tests
         run: |
           cd ckan
