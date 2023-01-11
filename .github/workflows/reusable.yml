@@ -53,7 +53,12 @@ jobs:
         run: |
           cd ckan
           git checkout ${{ inputs.ckan-version }}
-      - name: Install requirements
+      - name: Install requirements-setuptools.txt (CKAN 2.9 only)
+        if: ${{ inputs.ckan-version == 'dev-v2.9'}}
+        run: |
+          cd ckan
+          pip install -r requirement-setuptools.txt
+      - name: Install requirements and CKAN
         run: |
           cd ckan
           pip install -r requirements.txt
