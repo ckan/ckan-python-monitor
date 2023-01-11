@@ -58,7 +58,8 @@ jobs:
           cd ckan
           pip install -r requirements.txt
           pip install -r dev-requirements.txt
-          python setup.py develop
+          # Change to `pip install .` when #7221 is merged
+          pip install -e .
           pip check
       - name: Set config file
         run: |
