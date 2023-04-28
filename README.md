@@ -17,6 +17,7 @@ This is a monitor that twice a week runs the test suite of CKAN core against dif
 | master | 3.8 | [![CKAN master on Python 3.8](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python38.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python38.yml) |
 | master | 3.9 | [![CKAN master on Python 3.9](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python39.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python39.yml) |
 | master | 3.10 | [![CKAN master on Python 3.10](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python310.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python310.yml) |
+| master | 3.11 | [![CKAN master on Python 3.11](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python311.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python311.yml) |
 
 
 ## Notes
