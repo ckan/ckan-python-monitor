@@ -61,6 +61,7 @@ jobs:
       - name: Install requirements and CKAN
         run: |
           cd ckan
+          pip install -U pip
           pip install -r requirements.txt
           pip install -r dev-requirements.txt
           # Change to `pip install .` when #7221 is merged
