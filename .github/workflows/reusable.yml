@@ -58,6 +58,7 @@ jobs:
         run: |
           cd ckan
           pip install -r requirement-setuptools.txt
+          pip install wheel
       - name: Install requirements and CKAN
         run: |
           cd ckan
