@@ -13,10 +13,12 @@ This is a monitor that twice a week runs the test suite of CKAN core against dif
 | 2.10 | 3.8 | [![CKAN 2.10 on Python 3.8](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckan210-python38.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckan210-python38.yml) |
 | 2.10 | 3.9 | [![CKAN 2.10 on Python 3.9](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckan210-python39.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckan210-python39.yml) |
 | 2.10 | 3.10 | [![CKAN 2.10 on Python 3.10](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckan210-python310.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckan210-python310.yml) |
+| 2.10 | 3.11 | [![CKAN 2.10 on Python 3.11](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckan210-python311.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckan210-python311.yml) |
 | master | 3.8 | [![CKAN master on Python 3.8](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python38.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python38.yml) |
 | master | 3.9 | [![CKAN master on Python 3.9](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python39.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python39.yml) |
 | master | 3.10 | [![CKAN master on Python 3.10](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python310.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python310.yml) |
 | master | 3.11 | [![CKAN master on Python 3.11](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python311.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python311.yml) |
+| master | 3.12 | [![CKAN master on Python 3.12](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python312.yml/badge.svg)](https://github.com/ckan/ckan-python-monitor/actions/workflows/ckanmaster-python312.yml) |
 
 
 ## Notes
