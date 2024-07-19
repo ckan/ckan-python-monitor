@@ -1,4 +1,4 @@
-name: CKAN master on Python 3.9
+name: CKAN master on Python 3.10
 
 on:
   push:
@@ -10,4 +10,4 @@ jobs:
     uses: ./.github/workflows/reusable.yml
     with:
       python-version: "3.9"
-      ckan-version: "master"
+      ckan-version: "dev-v2.11"
