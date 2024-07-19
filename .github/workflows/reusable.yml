@@ -15,7 +15,7 @@ jobs:
     runs-on: ubuntu-20.04
     services:
       solr:
-        image: ckan/ckan-solr:master
+        image: ckan/ckan-solr:master-solr9
         ports:
           - 8983:8983
       postgres:
@@ -28,7 +28,7 @@ jobs:
         ports:
           - 5432:5432
       redis:
-        image: redis:3
+        image: redis:6
         ports:
           - 6379:6379
     env:
@@ -40,9 +40,9 @@ jobs:
       SOLR_URL: http://localhost:8983/solr/ckan
       REDIS_URL: redis://localhost:6379/1
     steps:
-      - uses: actions/checkout@v3
+      - uses: actions/checkout@v4
       - name: Set up Python ${{ inputs.python-version }}
-        uses: actions/setup-python@v4
+        uses: actions/setup-python@v5
         with:
           python-version: ${{ inputs.python-version }}
       - name: Display Python version
