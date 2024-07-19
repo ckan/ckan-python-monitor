@@ -1,4 +1,4 @@
-name: CKAN master on Python 3.10
+name: CKAN 2.11 on Python 3.11
 
 on:
   push:
