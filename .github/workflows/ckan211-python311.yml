@@ -1,7 +1,8 @@
-name: CKAN 2.11 on Python 3.11
+name: CKAN 2.11 on Python 3.11 (v2)
 
 on:
   push:
+  workflow_dispatch:
   schedule:
     - cron: '0 0 * * 2,4'
 
