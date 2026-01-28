@@ -148,7 +148,7 @@ jobs:
       - name: Install git
         run: apt-get update && apt-get install --no-install-recommends -y git
       - name: Clone and checkout CKAN ${{ inputs.ckan-version }}
-        run: git clone -b ${{ inputs.ckan-version }} https://github.com/ckan/ckan.git
+        run: git clone -b ${{ inputs.ckan-version }} https://github.com/ckan/ckan.git .
 
       # These two steps will be executed only when there IS a cache hit (exact match or not). When a matrix
       # job is retried, it will reuse the same artifact, to execute the exact same split.
@@ -179,12 +179,10 @@ jobs:
 
       - name: Install deps
         run: |
-         cd ckan
          ./test-infrastructure/install_deps.sh
 
       - name: Init environment
         run: |
-         cd ckan
          ./test-infrastructure/init_environment.sh
 
       # When running pytest, we write the new test durations using options
@@ -206,22 +204,6 @@ jobs:
           #we ignore test 'test_building_the_docs' as its looked after by the docs.yml workflow which provides the sphinx documentation build artifact and it also takes 50 seconds to run
           pytest $PYTEST_COMMON_OPTIONS --splits $SPLIT_COUNT --group ${{ matrix.split }} --splitting-algorithm least_duration --store-durations --clean-durations  -k 'not test_building_the_docs'
           echo "::endgroup::"
-
-      - name: Upload coverage reports to Codecov
-        uses: codecov/codecov-action@v5
-        if: ${{ !cancelled() }}
-        continue-on-error: true #don't fail if we can't upload (ie a fork that does not have integration plugged in)
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: false # optional (default = false)
-
-      - name: Upload test results to Codecov
-        uses: codecov/test-results-action@v1
-        if: ${{ !cancelled() }}
-        continue-on-error: true #don't fail if we can't upload (ie a fork that does not have integration plugged in)
-        with:
-          token: ${{ secrets.CODECOV_TOKEN }}
-          verbose: false # optional (default = false)
 
       # Each matrix job uploads its freshly updated partial test durations. We regroup them all
       # within one final file in the "Merge all partial test durations" step below.
