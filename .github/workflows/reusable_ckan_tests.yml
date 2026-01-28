@@ -195,8 +195,6 @@ jobs:
         run: |
           set -ex
 
-          cd ckan
-
           mkdir -p ./junit/result
           echo "${{ matrix.split }} of $SPLIT_COUNT"
 
@@ -216,48 +214,6 @@ jobs:
           if-no-files-found: error
           include-hidden-files: true
           retention-days: 1
-
-      - name: Prep test coverage split file
-        run: |
-          mv .coverage coverage-${{ matrix.split }}
-
-      - name: Upload coverage artifacts
-        uses: actions/upload-artifact@v4
-        with:
-          name: internal_coverage-${{ matrix.split }}
-          path: coverage-${{ matrix.split }}
-          if-no-files-found: error
-          include-hidden-files: true
-          retention-days: 1
-
-      - name: Store test results
-        uses: actions/upload-artifact@v4
-        if: always()
-        with:
-          name: internal_junit-results-${{ matrix.split }}
-          path: ./junit/result
-          retention-days: 1
-
-      - name: Test Summary (if Failure)
-        uses: test-summary/action@v2
-        with:
-          paths: "./junit/result/*.xml"
-        if: failure()
-
-      - name: Test Summary Local copy (If Failure)
-        uses: test-summary/action@v2
-        with:
-          paths: "./junit/result/*.xml"
-          output: "./junit/result/test-summary.md"
-        if: failure()
-
-      - name: Store Test Summary results (If Failure)
-        uses: actions/upload-artifact@v4
-        with:
-          name: split-test-summary-${{ matrix.split }}.md
-          path: "./junit/result/test-summary.md"
-          retention-days: 30
-        if: failure()
 
 
   cache-test-durations:
@@ -299,77 +255,3 @@ jobs:
           path: /tmp/.test_durations
           key: tests-durations-${{ github.sha }}
 
-  merge-code-coverage-and-upload:
-    name: Test Result Combine
-    needs: pytest
-    if: github.run_attempt == 1 && (success() || failure()) && needs.define-matrix.outputs.IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED == 'false'
-    runs-on: ubuntu-latest
-    container:
-      # Needs to run on the same image the tests were run
-      image: python:${{ inputs.python-version }}-slim
-
-    steps:
-      - name: Checkout repository
-        uses: actions/checkout@v4
-
-      - name: Cache pip
-        uses: actions/cache@v4
-        with:
-          path: ${{ env.PIP_CACHE_DIR }}
-          key: ${{ runner.os }}-pip-${{ hashFiles('*requirements.txt') }}
-          restore-keys: |
-            ${{ runner.os }}-pip-
-
-      - name: Install dependencies
-        run: |
-          pip install -r dev-requirements.txt
-
-      - name: Download all coverage artifacts
-        uses: actions/download-artifact@v4
-        with:
-          pattern: internal_coverage-*
-          path: coverage-data
-          merge-multiple: 'true'
-
-      - name: Download all JUnit XML results
-        uses: actions/download-artifact@v4
-        with:
-          pattern: internal_junit-results-*
-          merge-multiple: true
-          path: junit-results
-
-      - name: Merge Coverage and JUnit XML files
-        run: |
-          set -ex
-          mkdir -p results
-          echo "merge junit test results"
-
-          echo "::group::junitparser-merge"
-          junitparser merge junit-results/*.xml merged.xml
-          echo "::endgroup::"
-
-          echo "::group::junit2html generate"
-          junit2html merged.xml results/pytest-results.html
-          cp merged.xml results/junit_results.xml
-          echo "::endgroup::"
-
-          echo "merge pytest coverage results"
-
-          echo "::group::coverage combine"
-          coverage combine --keep -a ./coverage-data/*
-          echo "::endgroup::"
-
-          echo "::group::pytest-html-report"
-          coverage html -d results/coverage_html
-          echo "::endgroup::"
-
-      - name: Pytest Coverage Console Report
-        run: |
-          set -ex
-          coverage report -m
-
-      - name: Upload HTML coverage report
-        uses: actions/upload-artifact@v4
-        with:
-          name: combined-test-coverage-reports
-          path: results
