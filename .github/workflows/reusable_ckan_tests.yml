@@ -1,5 +1,7 @@
 name: Reusable CKAN Test workflow (splits)
 
+# Adapted and simplified from the core ckan/ckan repo worflow
+
 #pytest split data storage https://github.com/jerry-git/pytest-split/issues/20#issuecomment-2576031836
 #GitHub actions variables. IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED when set to 'True', will disable rollup (default will run)
 on:
