@@ -12,11 +12,6 @@ on:
       ckan-version:
         required: true
         type: string
-      splits:
-        type: number
-        description: 'Number of test splits default 1 (max 24)'
-        required: true
-        default: '1'
       IS_PYTEST_COMBINE_TEST_RESULTS_DISABLED:
         type: boolean
         description: Override flag for skipping rollup of pytest/coverage html reports
@@ -50,11 +45,7 @@ jobs:
         # default matrix for splits if we did not get an input
         run: |
           set -ex
-          export SPLIT_COUNT=${{ inputs.splits || 12 }}
-          if [ "$SPLIT_COUNT" -gt 24 ]; then
-            echo "Splits cannot exceed 24"
-            export SPLIT_COUNT=24
-          fi
+          export SPLIT_COUNT=12
 
           if [ "$ACT" == "true" ] && [ -z "${{ inputs.splits }}" ]; then
             echo "Running with act limiting splits to 1 as splits not provided"
