@@ -1,0 +1,14 @@
+name: CKAN master on Python 3.13 (v2)
+
+on:
+  push:
+  workflow_dispatch:
+  schedule:
+    - cron: '0 0 * * 2,4'
+
+jobs:
+  call-reusable-workflow:
+    uses: ./.github/workflows/reusable_ckan_tests.yml
+    with:
+      python-version: "3.13"
+      ckan-version: "master"
