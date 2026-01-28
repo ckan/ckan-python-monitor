@@ -146,7 +146,7 @@ jobs:
       - run: |
           echo "${{ matrix.split }} of $SPLIT_COUNT"
       - name: Install requirements
-        run: apt-get update && apt-get install --no-install-recommends -y git libpq-dev
+        run: apt-get update && apt-get install --no-install-recommends -y git libpq-dev g++
       - name: Clone and checkout CKAN ${{ inputs.ckan-version }}
         run: git clone -b ${{ inputs.ckan-version }} https://github.com/ckan/ckan.git .
 
