@@ -145,6 +145,8 @@ jobs:
     steps:
       - run: |
           echo "${{ matrix.split }} of $SPLIT_COUNT"
+      - name: Install git
+        run: apt-get install --no-install-recommends -y git
       - name: Clone and checkout CKAN ${{ inputs.ckan-version }}
         run: git clone -b ${{ inputs.ckan-version }} https://github.com/ckan/ckan.git
 
