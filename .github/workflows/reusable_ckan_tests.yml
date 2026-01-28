@@ -5,7 +5,6 @@ name: Reusable CKAN Test workflow (splits)
 on:
   #pull_request: #disabled as its called via test.yml uses delegation
   workflow_call:
-  workflow_dispatch:
     inputs:
       python-version:
         required: true
