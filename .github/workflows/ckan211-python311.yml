@@ -7,7 +7,7 @@ on:
 
 jobs:
   call-reusable-workflow:
-    uses: ./.github/workflows/reusable.yml
+    uses: ./.github/workflows/reusable_ckan_tests.yml
     with:
       python-version: "3.11"
       ckan-version: "dev-v2.11"
