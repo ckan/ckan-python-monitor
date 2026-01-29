@@ -3,6 +3,12 @@ name: CKAN 2.11 on Python 3.13 (v2)
 on:
   push:
   workflow_dispatch:
+    inputs:
+      branch-name:
+        description: 'CKAN branch'
+        required: false
+        default: 'dev-v2.11'
+        type: string
   schedule:
     - cron: '0 0 * * 2,4'
 
@@ -11,4 +17,4 @@ jobs:
     uses: ./.github/workflows/reusable_ckan_tests.yml
     with:
       python-version: "3.13"
-      ckan-version: "dev-v2.11"
+      ckan-version: ${{ inputs.branch-name || 'dev-v2.11' }}

@@ -3,6 +3,12 @@ name: CKAN master on Python 3.10 (v2)
 on:
   push:
   workflow_dispatch:
+    inputs:
+      branch-name:
+        description: 'CKAN branch'
+        required: false
+        default: 'master'
+        type: string
   schedule:
     - cron: '0 0 * * 2,4'
 
@@ -11,4 +17,4 @@ jobs:
     uses: ./.github/workflows/reusable_ckan_tests.yml
     with:
       python-version: "3.10"
-      ckan-version: "master"
+      ckan-version: ${{ inputs.branch-name || 'master' }}
