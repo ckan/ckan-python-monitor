@@ -3,7 +3,6 @@
 This is a monitor that twice a week runs the test suite of CKAN core against different Python versions.
 
 
-
 ## Status
 
 | Python version | CKAN 2.10 | CKAN 2.11 | CKAN master |
