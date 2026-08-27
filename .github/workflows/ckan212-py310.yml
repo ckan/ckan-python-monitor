@@ -10,7 +10,7 @@ on:
         default: 'dev-v2.12'
         type: string
   schedule:
-    - cron: '0 0 * * 2,4'
+    - cron: '0 0 1 * *'
 
 jobs:
   call-reusable-workflow:
