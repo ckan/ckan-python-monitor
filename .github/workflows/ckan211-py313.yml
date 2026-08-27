@@ -9,8 +9,6 @@ on:
         required: false
         default: 'dev-v2.11'
         type: string
-  schedule:
-    - cron: '0 0 * * 2,4'
 
 jobs:
   call-reusable-workflow:
