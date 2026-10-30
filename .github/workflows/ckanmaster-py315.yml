@@ -1,4 +1,4 @@
-name: CKAN 2.10 on Python 3.11 (v2)
+name: CKAN master on Python 3.15
 
 on:
   push:
@@ -7,12 +7,14 @@ on:
       branch-name:
         description: 'CKAN branch'
         required: false
-        default: 'dev-v2.10'
+        default: 'master'
         type: string
+  schedule:
+    - cron: '0 0 1 * *'
 
 jobs:
   call-reusable-workflow:
     uses: ./.github/workflows/reusable_ckan_tests.yml
     with:
-      python-version: "3.11"
-      ckan-version: ${{ inputs.branch-name || 'dev-v2.10' }}
+      python-version: "3.15"
+      ckan-version: ${{ inputs.branch-name || 'master' }}
